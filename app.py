@@ -45,7 +45,15 @@ with st.sidebar:
     st.title("⚙️ Configuration")
     
     # API Key management
-    default_key = os.getenv("GEMINI_API_KEY", "")
+    default_key = ""
+    try:
+        if "GEMINI_API_KEY" in st.secrets:
+            default_key = st.secrets["GEMINI_API_KEY"]
+    except Exception:
+        pass
+    if not default_key:
+        default_key = os.getenv("GEMINI_API_KEY", "")
+
     api_key = st.text_input(
         "Gemini API Key",
         value=default_key,
@@ -55,7 +63,7 @@ with st.sidebar:
     
     model_name = st.selectbox(
         "Model",
-        ["gemini-3.5-flash", "gemini-3.6-flash"],
+        ["gemini-3.5-flash", "gemini-3.6-flash", "gemini-3.8-flash"],
         index=0,
         help="gemini-3.5-flash offers maximum stability and zero wait time"
     )
@@ -133,6 +141,7 @@ if prompt := st.chat_input("Ask about any city, state, demographics, or location
         with st.chat_message("assistant"):
             with st.spinner("Analyzing location intelligence & geospatial data..."):
                 try:
+                    import time
                     from google import genai
                     from google.genai import types
 
@@ -147,18 +156,38 @@ if prompt := st.chat_input("Ask about any city, state, demographics, or location
                             contents.append(f"Assistant: {m['content']}")
                     contents.append(f"User: {prompt}")
 
-                    response = client.models.generate_content(
-                        model=model_name,
-                        contents="\n\n".join(contents),
-                        config=types.GenerateContentConfig(
-                            system_instruction=SYSTEM_INSTRUCTION,
-                            temperature=0.7
-                        )
-                    )
-                    
-                    reply = response.text
-                    st.markdown(reply)
-                    st.session_state.messages.append({"role": "assistant", "content": reply})
+                    candidate_models = [model_name, "gemini-3.5-flash", "gemini-3.6-flash", "gemini-3.8-flash"]
+                    seen = set()
+                    candidate_models = [m for m in candidate_models if not (m in seen or seen.add(m))]
+
+                    reply = None
+                    last_error = None
+
+                    for cand in candidate_models:
+                        for attempt in range(3):
+                            try:
+                                response = client.models.generate_content(
+                                    model=cand,
+                                    contents="\n\n".join(contents),
+                                    config=types.GenerateContentConfig(
+                                        system_instruction=SYSTEM_INSTRUCTION,
+                                        temperature=0.7
+                                    )
+                                )
+                                if response and response.text:
+                                    reply = response.text
+                                    break
+                            except Exception as e:
+                                last_error = e
+                                time.sleep(1.5 * (attempt + 1))
+                        if reply:
+                            break
+
+                    if reply:
+                        st.markdown(reply)
+                        st.session_state.messages.append({"role": "assistant", "content": reply})
+                    else:
+                        st.error(f"❌ The model is currently experiencing temporary high traffic. Please try again in 10-15 seconds. Details: {last_error}")
                 except Exception as e:
                     err_msg = f"❌ Error: {str(e)}"
                     st.error(err_msg)
