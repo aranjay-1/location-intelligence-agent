@@ -1,0 +1,7 @@
+google-genai>=2.0.0
+google-adk>=1.28.0
+python-dotenv>=1.0.0
+pandas
+numpy
+google-cloud-bigquery
+streamlit>=1.35.0
