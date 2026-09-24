@@ -1,10 +1,21 @@
-# Launch My Bakery: Google remote MCP demo 
+# Worldwide Location Intelligence Agent 🗺️
 
-[![Google Cloud](https://img.shields.io/badge/Blog-4285F4?style=for-the-badge&logo=google-cloud&logoColor=white)](https://cloud.google.com/blog/products/ai-machine-learning/announcing-official-mcp-support-for-google-services)
+[![Live Demo](https://img.shields.io/badge/Live_Demo-Streamlit-FF4B4B?style=for-the-badge&logo=Streamlit&logoColor=white)](https://location-intelligence-agent-t5vmpcdcd29kopkgkxbbws.streamlit.app/)
+[![Google Cloud](https://img.shields.io/badge/Google_Cloud-4285F4?style=for-the-badge&logo=google-cloud&logoColor=white)](https://cloud.google.com/blog/products/ai-machine-learning/announcing-official-mcp-support-for-google-services)
 [![Codelab](https://img.shields.io/badge/Codelab-58A55d.svg?style=for-the-badge&logo=devbox&logoColor=white)](https://codelabs.developers.google.com/adk-mcp-bigquery-maps#0)
 [![Screencast](https://img.shields.io/badge/Screencast-%23FF0000.svg?style=for-the-badge&logo=YouTube&logoColor=white)](https://www.youtube.com/watch?v=wzccErUYhTI&t=1s)
 
-This directory contains the data artifacts and infrastructure setup scripts for the **MCP support for BigQuery & Google Maps** demo.  
+> 🚀 **Live Interactive Demo:** [https://location-intelligence-agent-t5vmpcdcd29kopkgkxbbws.streamlit.app/](https://location-intelligence-agent-t5vmpcdcd29kopkgkxbbws.streamlit.app/)
+
+An AI-powered Location Intelligence & Business Advisory Agent combining real-world geospatial intelligence, demographic analytics, enterprise data (BigQuery), and Google Maps MCP tools.
+
+## 🌐 Live Application
+You can test the application live without any installation:  
+👉 **[Open Live Demo on Streamlit](https://location-intelligence-agent-t5vmpcdcd29kopkgkxbbws.streamlit.app/)**
+
+* **Worldwide State & Regional Intelligence:** Analyze market opportunities, demographics, and commercial density for any state or city globally (e.g., Uttar Pradesh, Delhi, California, London, Tokyo, etc.).
+* **Retail & Bakery Business Strategy:** Foot traffic scoring, competitor pricing distributions, and revenue projections.
+* **Resilient Multi-Model Architecture:** Built-in automatic retry with fallback across Gemini 3.5, 3.6, and 3.8 Flash models for uninterrupted 24/7 reliability.  
 
 ## Demo Overview
 
